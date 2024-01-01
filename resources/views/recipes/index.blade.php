@@ -30,9 +30,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             @if ($recipe->valid)
-                                <span class="badge bg-success">Valid</span>
+                                <span class="badge bg-success">Ready to cook</span>
                             @else
-                                <span class="badge bg-danger">Invalid</span>
+                                <span class="badge bg-danger">Not ready</span>
                             @endif
                         </div>
                         <a href="{{ route('recipes.show', $recipe) }}" class="btn btn-primary btn-sm">View Recipe</a>

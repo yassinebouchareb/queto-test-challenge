@@ -11,6 +11,10 @@ class Recipe extends Model
 
     protected $fillable = ['name', 'description'];
 
+    protected $casts = [
+        'valid' => 'boolean',
+    ];
+
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');

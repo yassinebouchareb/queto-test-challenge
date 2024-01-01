@@ -57,4 +57,28 @@ class RecipeController extends Controller
         return redirect()->route('recipes.index')->with('success', 'Recipe created successfully');
     }
 
+    /**
+     * Show recipe
+     * @param  Recipe $recipe
+     * @return View
+     * */
+    public function show(Recipe $recipe)
+    {
+        return view('recipes.show', compact('recipe'));
+    }
+
+    /**
+     * Validate recipe
+     * @param  Recipe $recipe
+     * @return RedirectResponse
+     * */
+    public function validateRecipe(Recipe $recipe)
+    {
+        // Validate recipe
+        if(!$this->recipeService->validate($recipe)) {
+            return redirect()->back()->with('error', 'Recipe could not be validated, please update your products quantity');
+        }
+
+        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe validated successfully');
+    }
 }

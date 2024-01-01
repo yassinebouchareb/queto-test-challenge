@@ -28,4 +28,33 @@ class RecipeService
 
         return $recipe;
     }
+
+    /**
+     * Validate recipe
+     * @param Recipe $recipe
+     * @return Recipe
+     * */
+    public function validate(Recipe $recipe)
+    {
+        // Load recipe with products
+        $recipe = $recipe->load('products');
+
+        // Validate recipe if products are in stock
+        foreach ($recipe->products as $product) {
+            if ($product->pivot->quantity > $product->quantity) {
+                return false;
+            }
+        }
+
+        // Update products quantity
+        foreach ($recipe->products as $product) {
+            $product->update(['quantity' => $product->quantity - $product->pivot->quantity]);
+        }
+
+        // Update recipe status
+        $recipe->valid = true;
+        $recipe->save();
+
+        return true;
+    }
 }

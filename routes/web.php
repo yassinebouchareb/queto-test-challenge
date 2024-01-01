@@ -28,4 +28,5 @@ Route::prefix('recipes')->group(function () {
     Route::get('/create', [RecipeController::class, 'create'])->name('recipes.create');
     Route::post('/', [RecipeController::class, 'store'])->name('recipes.store');
     Route::get('/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
+    Route::post('/{recipe}/validate', [RecipeController::class, 'validateRecipe'])->name('recipes.validate');
 });
