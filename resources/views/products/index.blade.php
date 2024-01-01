@@ -23,7 +23,7 @@
                     </thead>
                     <tbody id="tbody">
                         @foreach ($products as $product)
-                            <tr class="{{ $product->is_expired ? 'tr-expired' : '' }}">
+                            <tr class="{{ $product->is_expired || !$product->is_in_stock ? 'tr-expired' : '' }}">
                                 <td>{{ $product->name }}</td>
                                 <td>{{ Str::words($product->description, 6) }}</td>
                                 <td  class="text-center">{{ $product->quantity }}</td>
@@ -42,7 +42,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)" class="btn btn-outline-secondary btn-sm">Edit</a>
+                                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -12,7 +12,7 @@
     <div class="page-content container note-has-grid">
         <ul class="nav nav-pills mt-2 p-3 bg-white mb-3 rounded-pill align-items-center shadow-sm">
             <li class="nav-item mx-3">
-                <a href="javascript:void(0)" class="nav-link rounded-pill note-link d-flex align-items-center px-3 px-md-3 mr-0 mr-md-4 active" id="all-category">
+                <a href="{{ route('products.index') }}" class="nav-link rounded-pill note-link d-flex align-items-center px-3 px-md-3 mr-0 mr-md-4 {{ request()->routeIs('products.*') ? 'active' : '' }}" id="all-category">
                     <i class="icon-layers mr-1"></i><span class="d-none d-md-block">Products</span>
                 </a>
             </li>

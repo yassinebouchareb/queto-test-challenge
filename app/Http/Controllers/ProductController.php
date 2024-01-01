@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -47,5 +48,30 @@ class ProductController extends Controller
         }
 
         return redirect()->route('products.index')->with('success', 'Product created successfully');
+    }
+
+    /**
+     * Show the form for editing the specified product
+     *
+     * @param  Product $product
+     * @return View
+     */
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
+
+    /**
+     * Update the specified product
+     *
+     * @param  StoreProductRequest $request
+     * @param  Product $product
+     * @return RedirectResponse
+     */
+    public function update(UpdateProductRequest $request, Product $product)
+    {
+        $product->update($request->validated());
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
 }
