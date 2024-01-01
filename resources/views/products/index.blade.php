@@ -6,7 +6,7 @@
 
             <div class="d-flex justify-content-between align-items-center mb-5">
                 <h4 class="card-title">Products List</h4>
-                <a href="javascript:void(0)" class="btn btn-dark" id="add-product">Add Product</a>
+                <a href="{{ route('products.create') }}" class="btn btn-dark" id="add-product">Add Product</a>
             </div>
 
             @if ($products->count())
