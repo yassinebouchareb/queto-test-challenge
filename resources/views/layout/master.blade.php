@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li class="nav-item mx-3">
-                <a href="javascript:void(0)" class="nav-link rounded-pill note-link d-flex align-items-center px-3 px-md-3 mr-0 mr-md-2" id="note-business"> <i class="icon-briefcase mr-1"></i><span class="d-none d-md-block">Recipes</span></a>
+                <a href="{{ route('recipes.index') }}" class="nav-link rounded-pill note-link d-flex align-items-center px-3 px-md-3 mr-0 mr-md-2 {{ request()->routeIs('recipes.*') ? 'active' : '' }}" id="note-business"> <i class="icon-briefcase mr-1"></i><span class="d-none d-md-block">Recipes</span></a>
             </li>
         </ul>
 
