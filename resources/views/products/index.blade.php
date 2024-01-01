@@ -4,9 +4,18 @@
     <div class="card">
         <div class="card-body">
 
-            <div class="d-flex justify-content-between align-items-center mb-5">
-                <h4 class="card-title">Products List</h4>
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title pr-3">Products List</h4>
+
                 <a href="{{ route('products.create') }}" class="btn btn-dark" id="add-product">Add Product</a>
+            </div>
+            <hr>
+            <div class=" w-50 mb-4">
+                <span>Filter by : </span>
+                <a href="{{ route('products.index') }}" class="badge btn btn-secondary rounded-pill mr-2">All</a>
+                <a href="{{ request()->fullUrlWithQuery(['status' => 'in_stock']) }}" class="badge btn btn-secondary rounded-pill">In Stock</a>
+                <a href="{{ request()->fullUrlWithQuery(['status' => 'out_of_stock']) }}" class="badge btn btn-secondary rounded-pill">Out of Stock</a>
+                <a href="{{ request()->fullUrlWithQuery(['status' => 'expired']) }}" class="badge btn btn-secondary rounded-pill">Expired</a>
             </div>
 
             @if ($products->count())

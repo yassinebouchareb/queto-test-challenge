@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,10 +17,26 @@ class ProductController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Product::query();
+
+        $query->when($request->has('status'), function($query) use ($request) {
+            switch ($request->status) {
+                case 'in_stock':
+                    $query->where('quantity', '>', 0);
+                    break;
+                case 'out_of_stock':
+                    $query->where('quantity', '=', 0);
+                    break;
+                case 'expired':
+                    $query->where('expiration_date', '<', Carbon::now()->format('Y-m-d'));
+                    break;
+            }
+        });
+
         // Get all products
-        $products = Product::paginate(10);
+        $products = $query->latest()->paginate(10);
         return view('products.index', compact('products'));
     }
 
