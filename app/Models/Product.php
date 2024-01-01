@@ -32,4 +32,19 @@ class Product extends Model
     {
         return $this->belongsToMany(Recipe::class)->withPivot('quantity');
     }
+
+    public function scopeInStock($query)
+    {
+        return $query->where('quantity', '>', 0);
+    }
+
+    public function scopeExpired($query)
+    {
+        return $query->where('expiration_date', '<', Carbon::now()->format('Y-m-d'));
+    }
+
+    public function scopeOutOfStock($query)
+    {
+        return $query->where('quantity', '<=', 0);
+    }
 }

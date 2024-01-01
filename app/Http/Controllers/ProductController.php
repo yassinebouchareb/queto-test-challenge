@@ -24,13 +24,13 @@ class ProductController extends Controller
         $query->when($request->has('status'), function($query) use ($request) {
             switch ($request->status) {
                 case 'in_stock':
-                    $query->where('quantity', '>', 0);
+                    $query->inStock();
                     break;
                 case 'out_of_stock':
-                    $query->where('quantity', '=', 0);
+                    $query->outOfStock();
                     break;
                 case 'expired':
-                    $query->where('expiration_date', '<', Carbon::now()->format('Y-m-d'));
+                    $query->expired();
                     break;
             }
         });
