@@ -20,10 +20,24 @@ class RecipeController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Recipe::with('products');
+
+        // Filter recipes
+        $query->when($request->has('valid'), function($query) use ($request) {
+            switch ($request->valid) {
+                case '1':
+                    $query->valid();
+                    break;
+                case '0':
+                    $query->invalid();
+                    break;
+            }
+        });
+
         // Get all recipes
-        $recipes = Recipe::with('products')->paginate(10);
+        $recipes = $query->latest()->paginate(6);
         return view('recipes.index', compact('recipes'));
     }
 

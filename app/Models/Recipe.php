@@ -19,4 +19,14 @@ class Recipe extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
+
+    public function scopeValid($query)
+    {
+        return $query->where('valid', true);
+    }
+
+    public function scopeInvalid($query)
+    {
+        return $query->where('valid', false);
+    }
 }
