@@ -4,7 +4,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title m-0">Recipes List</h4>
+                <h4 class="card-title m-0">{{ __($title) }}</h4>
                 <a href="{{ route('recipes.create') }}" class="btn btn-dark" id="add-recipe">Add Recipe</a>
             </div>
         </div>
@@ -30,7 +30,13 @@
                     <div class="note-content">
                         <ul>
                             @foreach ($recipe->products as $product)
-                                <li>(<strong>{{ $product->pivot->quantity }}</strong> x) {{ $product->name }}</li>
+                                <li>
+                                    (<strong>{{ $product->pivot->quantity }}</strong> x) {{ $product->name }}
+                                    @if ($product->pivot->quantity > $product->quantity)
+                                        <span class="badge bg-danger">Out of stock</span>
+                                        <a href="{{ route('products.edit', $product) }}" class="badge btn btn-sm btn-secondary rounded-pill">Edit</a>
+                                    @endif
+                                </li>
                             @endforeach
                         </ul>
                     </div>

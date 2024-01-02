@@ -22,23 +22,12 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Recipe::with('products');
+        // Filter recipes based on URL params
+        $result = $this->recipeService->filter($request->all());
+        $recipes = $result['recipes'];
+        $title = $result['title'];
 
-        // Filter recipes
-        $query->when($request->has('valid'), function($query) use ($request) {
-            switch ($request->valid) {
-                case '1':
-                    $query->valid();
-                    break;
-                case '0':
-                    $query->invalid();
-                    break;
-            }
-        });
-
-        // Get all recipes
-        $recipes = $query->latest()->paginate(6);
-        return view('recipes.index', compact('recipes'));
+        return view('recipes.index', compact('recipes', 'title'));
     }
 
     /**
@@ -93,6 +82,6 @@ class RecipeController extends Controller
             return redirect()->back()->with('error', 'Recipe could not be validated, please update your products quantity');
         }
 
-        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe validated successfully');
+        return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe validated and products quantity updated successfully.');
     }
 }

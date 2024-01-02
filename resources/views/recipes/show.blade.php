@@ -17,11 +17,18 @@
                     <p class="note-date font-12 text-muted">Created {{ $recipe->created_at->diffForHumans() }}</p>
                     <h5>Description of this recipe</h5>
                     <p>{!! $recipe->description !!}</p>
+                    <hr>
                     <div class="note-content">
                         <h5>Products used in this recipe</h5>
                         <ul>
                             @foreach ($recipe->products as $product)
-                                <li>({{ $product->pivot->quantity }} x ) {{ $product->name }}</li>
+                                <li class="py-1">
+                                    ({{ $product->pivot->quantity }} x ) {{ $product->name }}
+                                    @if ($product->pivot->quantity > $product->quantity)
+                                        <span class="badge bg-danger">Out of stock</span>
+                                        <a href="{{ route('products.edit', $product) }}" class="badge btn btn-sm btn-secondary rounded-pill">Edit</a>
+                                    @endif
+                                </li>
                             @endforeach
                         </ul>
                     </div>

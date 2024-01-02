@@ -6,6 +6,32 @@ use App\Models\Recipe;
 
 class RecipeService
 {
+    public function filter(array $data)
+    {
+        $query = Recipe::with('products');
+
+        // Filter recipes
+        $title = 'List of all recipes';
+        $query->when(isset($data['valid']), function($query) use ($data, &$title) {
+            $title = '';
+            switch ($data['valid']) {
+                case '1':
+                    $query->valid();
+                    $title = 'List of ready to cook recipes';
+                    break;
+                case '0':
+                    $query->invalid();
+                    $title = 'List of not ready to cook recipes';
+                    break;
+            }
+        });
+
+        // Get all recipes
+        $recipes = $query->latest()->paginate(6);
+
+        return compact('recipes', 'title');
+    }
+
     /**
      * Create a new recipe
      * @param array $data
